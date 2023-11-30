@@ -12,7 +12,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('/assets/backgroundUni.jpeg') no-repeat;
+    background: url('../assets/backgroundUni.jpeg') no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -35,7 +35,7 @@ header {
     user-select: none;
 }
 
-.navigation a {
+.navigation a{
     position: relative;
     font-size: 1.1em;
     color: #fff;
@@ -95,7 +95,7 @@ header {
     transition: transform .5s ease, height .2s ease;
 }
 
-.wrapper.active-popup{
+.wrapper.active-popup {
     transform: scale(1);
 }
 
@@ -109,12 +109,12 @@ header {
     padding: 40px;
 }
 
-.wrapper .form-box.login{
+.wrapper .form-box.login {
     transition: transform .18s ease;
     transform: translateX(0);
 }
 
-.wrapper.active .form-box.login{
+.wrapper.active .form-box.login {
     transition: transform 0.18s ease;
     transform: translateX(-400px);
 }
@@ -125,7 +125,7 @@ header {
     transform: translateX(400px);
 }
 
-.wrapper.active .form-box.register{
+.wrapper.active .form-box.register {
     transition: transform .18s ease;
     transform: translateX(0);
 }
@@ -174,7 +174,7 @@ header {
 }
 
 .input-box input:focus~label,
-.input-box input:valid~label{
+.input-box input:valid~label {
     top: -5px;
 }
 
@@ -368,11 +368,15 @@ header {
 }
 
 #close-recovery-link {
-    color: #fff; /* Defina a cor desejada para o link não visitado */
-    text-decoration: none; /* Remova qualquer decoração de texto, como sublinhado */
+    color: #fff;
+    /* Defina a cor desejada para o link não visitado */
+    text-decoration: none;
+    /* Remova qualquer decoração de texto, como sublinhado */
 }
+
 #close-recovery-link:hover {
-    text-decoration: underline; /* Remova qualquer decoração de texto, como sublinhado */
+    text-decoration: underline;
+    /* Remova qualquer decoração de texto, como sublinhado */
 }
 
 .password-recovery-text {

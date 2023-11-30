@@ -10,12 +10,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const registerForm = document.querySelector('.form-box.register');
     const recoveryForm = document.querySelector('.form-box.recovery');
 
+
+
     // Função para ocultar os formulários
     function hideForms() {
         wrapper.classList.remove('active');
         recoveryForm.style.display = 'none';
         iconClose.style.display = 'none';
     }
+
 
     registerLink.addEventListener('click', () => {
         hideForms();
@@ -24,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         loginForm.style.transform = 'translateX(-400px)';
         recoveryForm.style.transform = 'translateX(800px)';
     });
+
 
     loginLink.addEventListener('click', () => {
         hideForms();
@@ -69,6 +73,12 @@ document.addEventListener('DOMContentLoaded', function () {
         recoveryForm.style.transform = 'translateX(800px)';
     }
 
+    $(document).ready(function () {
+        $('#phoneInp').mask('(00) 0 0000-0000');
+    });
+
     // Inicialmente, exiba o formulário de login
     showLoginForm();
 });
+
+

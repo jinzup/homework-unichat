@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="login.js"></script>
+    <script type="module" src="register.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unicesumar Prompt - ChatGPT</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
 </head>
+
 <body>
-    
+
     <header>
         <h2 class="logo">Prompt</h2>
         <nav class="navigation">
-            <a href="">Home</a>
-            <a href="">About</a>
-            <a href="">Services</a>
-            <a href="">Contact</a>
             <button class="btnLogin-popup">Login</button>
         </nav>
     </header>
@@ -26,15 +30,15 @@
         </span>
         <div class="form-box login">
             <h2>Login</h2>
-            <form action="a">
+            <form action="" id="LoginForm">
                 <div class="input-box">
                     <span class="icon"><ion-icon name="mail-unread"></ion-icon></span>
-                    <input type="email" required>
+                    <input type="email" id="emailInp" required>
                     <label>Email</label>
                 </div>
                 <div class="input-box">
                     <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                    <input type="password" required>
+                    <input type="password" id="passwordInp" required>
                     <label>Senha</label>
                 </div>
                 <div class="remember-forgot">
@@ -43,48 +47,48 @@
                 </div>
                 <button type="submit" class="btn">Login</button>
                 <div class="login-register">
-                    <p>Não tem uma conta? <a href="#" class="register-link">Registrar-se</a></p> 
+                    <p>Não tem uma conta? <a href="#" class="register-link">Registrar-se</a></p>
                 </div>
             </form>
         </div>
 
-        <<div class="form-box register">
+        <div class="form-box register">
             <h2>Cadastro</h2>
-            <form action="a">
+            <form action="" id="RegisterForm">
                 <div class="input-box">
                     <span class="icon"><ion-icon name="person"></ion-icon></span>
-                    <input type="text" required>
+                    <input type="text" id="fullnameInp" required>
                     <label>Nome</label>
                 </div>
                 <div class="input-box">
                     <span class="icon"><ion-icon name="mail-unread"></ion-icon></span>
-                    <input type="email" required>
+                    <input type="email" id="registerEmailInp" required>
                     <label>Email</label>
                 </div>
                 <div class="input-box">
                     <span class="icon"><ion-icon name="call"></ion-icon></span>
-                    <input type="tel" required>
+                    <input type="tel" id="phoneInp" required>
                     <label>Telefone</label>
                 </div>
                 <div class="input-box">
                     <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                    <input type="password" required>
+                    <input type="password" id="registerPasswordInp" required>
                     <label>Senha</label>
                 </div>
                 <div class="remember-forgot">
-                    <label><input type="checkbox">Eu concordo com os termos e condições.</label>
+                    <label><input type="checkbox" id="termsaccept">Eu concordo com os termos e condições.</label>
                 </div>
                 <button type="submit" class="btn">Cadastrar-se</button>
                 <div class="login-register">
-                    <p>Já tem uma conta? <a href="#" class="login-link">Logar-se</a></p> 
+                    <p>Já tem uma conta? <a href="#" class="login-link">Logar-se</a></p>
                 </div>
             </form>
         </div>
-        
+
 
         <div class="form-box recovery" id="password-recovery-form">
             <h2 class="password-recovery-text">Recuperação de Senha</h2>
-            <form action="a">
+            <form action="">
                 <!-- Campo de entrada de e-mail para recuperação de senha -->
                 <div class="input-box">
                     <span class="icon"><ion-icon name="mail-unread"></ion-icon></span>
@@ -99,9 +103,93 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const wrapper = document.querySelector('.wrapper');
+            const loginLink = document.querySelector('.login-link');
+            const registerLink = document.querySelector('.register-link');
+            const btnPopup = document.querySelector('.btnLogin-popup');
+            const iconClose = document.querySelector('.icon-close');
+            const forgotPasswordLink = document.querySelector('#forgot-password-link');
+            const closeRecoveryLink = document.querySelector('#close-recovery-link');
+            const loginForm = document.querySelector('.form-box.login');
+            const registerForm = document.querySelector('.form-box.register');
+            const recoveryForm = document.querySelector('.form-box.recovery');
+
+
+
+            // Função para ocultar os formulários
+            function hideForms() {
+                wrapper.classList.remove('active');
+                recoveryForm.style.display = 'none';
+                iconClose.style.display = 'none';
+            }
+
+
+            registerLink.addEventListener('click', () => {
+                hideForms();
+                wrapper.classList.add('active');
+                registerForm.style.transform = 'translateX(0)';
+                loginForm.style.transform = 'translateX(-400px)';
+                recoveryForm.style.transform = 'translateX(800px)';
+            });
+
+
+            loginLink.addEventListener('click', () => {
+                hideForms();
+                wrapper.classList.add('active');
+                showLoginForm();
+            });
+
+            btnPopup.addEventListener('click', () => {
+                hideForms();
+                wrapper.classList.add('active-popup');
+                showLoginForm();
+            });
+
+            iconClose.addEventListener('click', () => {
+                hideForms();
+            });
+
+            forgotPasswordLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                hideForms();
+                showRecoveryForm();
+            });
+
+            closeRecoveryLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                hideForms();
+                showLoginForm();
+            });
+
+            // Função para exibir o formulário de recuperação de senha e centralizar
+            function showRecoveryForm() {
+                recoveryForm.style.display = 'block';
+                recoveryForm.style.transform = 'translate(-50%, -50%)'; // Centralizar vertical e horizontalmente
+                iconClose.style.display = 'block';
+                loginForm.style.transform = 'translateX(-400px)';
+                registerForm.style.transform = 'translateX(-400px)';
+            }
+
+            // Função para exibir o formulário de login e ocultar os outros
+            function showLoginForm() {
+                loginForm.style.transform = 'translateX(0)';
+                registerForm.style.transform = 'translateX(400px)';
+                recoveryForm.style.transform = 'translateX(800px)';
+            }
+
+            $(document).ready(function () {
+                $('#phoneInp').mask('(00) 0 0000-0000');
+            });
+
+            // Inicialmente, exiba o formulário de login
+            showLoginForm();
+        });
+    </script>
+
 </body>
+
 </html>
